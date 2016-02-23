@@ -1,0 +1,7 @@
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "13712-BaleIII_Capital_Program_Plan.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "CommercialConstructionProjectPlan.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "MicrosoftOfficeProject2003deployment.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "MS_Plan_integration_SE-1493.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "NewProduct.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "R2.1_Build_SAP_20131016_V2.mpp" -o "../data/private"
+java -jar ../build/PM-Mapper-translator.jar -i "../data/public/samples" -p "TS010090269.mpp" -o "../data/private"
