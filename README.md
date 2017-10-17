@@ -1,2 +1,2 @@
 # PM-Mapper
-Simple Visualization of Microsoft Project
+Squarified Treemap Visualization for Microsoft Project
