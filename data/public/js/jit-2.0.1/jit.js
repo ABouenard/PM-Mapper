@@ -374,10 +374,12 @@ $.clean = function(elem) {
   (end code)
 */
 $.addEvent = function(obj, type, fn) {
-  if (obj.addEventListener)
-    obj.addEventListener(type, fn, false);
-  else
-    obj.attachEvent('on' + type, fn);
+  if (obj != null) {
+	  if (obj.addEventListener)
+		obj.addEventListener(type, fn, false);
+	  else
+		obj.attachEvent('on' + type, fn);
+  }
 };
 
 $.addEvents = function(obj, typeObj) {
