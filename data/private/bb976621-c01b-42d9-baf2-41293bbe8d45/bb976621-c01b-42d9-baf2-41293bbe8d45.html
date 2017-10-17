@@ -1,0 +1,143 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<title>Project Management Mapper</title>
+
+		<!-- CSS -->
+		<link type="text/css" href="../../public/css/base.css" rel="stylesheet" />
+		<link type="text/css" href="../../public/css/Treemap.css" rel="stylesheet" />
+
+		<!-- JQuery -->
+		<link type="text/css" href="../../public/css/jquery-ui-1.8.18/ui-lightness/jquery-ui-1.8.18.custom.css" rel="stylesheet"/>
+		<script type="text/javascript" src="../../public/js/jquery-1.7.1.min.js"></script>
+		<script type="text/javascript" src="../../public/js/jquery-ui-1.8.18/jquery-ui-1.8.18.custom.min.js"></script>
+
+		<!-- JIT -->
+		<script language="javascript" type="text/javascript" src="../../public/js/jit-2.0.1/jit.js"></script>
+
+		<!-- Utils -->
+		<script language="javascript" type="text/javascript" src="../../public/js/utils.js"></script>
+
+		<!-- Data -->
+		<script language="javascript" type="text/javascript" src="./bb976621-c01b-42d9-baf2-41293bbe8d45.js"></script>
+
+		<script>
+			$(function()
+				{
+					$("#colorSlider").slider(
+						{
+							value: 0.02,
+							min: 0,
+							max: 1,
+							step: 0.01,
+							slide: function(event, ui)
+							{
+								colorCold = ColorBlendArray([0, 0, 200], [200, 0, 0], ui.value);
+								colorWarm = [0, 200, 0];
+								treemap.plot();
+							}
+						}
+					);
+					$("#priorityButton").button();
+					$("#startButton").button();
+					$("#finishButton").button();
+					$("#durationButton").button();
+					$("#completeButton").button();
+				}
+			);
+			function onPriorityButtonClick(button)
+			{
+				priorityAttribute = button.checked;
+			};
+			function onStartButtonClick(button)
+			{
+				startAttribute = button.checked;
+			};
+			function onFinishButtonClick(button)
+			{
+				finishAttribute = button.checked;
+			};
+			function onDurationButtonClick(button)
+			{
+				durationAttribute = button.checked;
+			};
+			function onCompleteButtonClick(button)
+			{
+				completeAttribute = button.checked;
+			};
+		</script>
+	</head>
+
+	<body onload="init();">
+		<div id="container">
+			<div id="left-container">
+				<div class="text">
+					<center>
+						<a href="@{PMM.index}"><img src="../../public/images/logo.png" width="340" height="75" alt="logo"/></a>
+					</center>
+				</div>
+				<div id="id-list">
+					<center>
+					<table>
+						<tr>
+							<td>
+								<font size="2" face="verdana" color="gray">Heat-color</font>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+								<div id="colorSlider" style="width:519px"></div>
+							</td>
+						</tr>
+						<tr>
+						</tr>
+						<tr>
+						</tr>
+						<tr>
+							<td>
+								<font size="2" face="verdana" color="gray">Task attributes</font>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+							</td>
+							<td>
+								<input type="checkbox" id="priorityButton" checked="checked" onClick="onPriorityButtonClick(document.getElementById('priorityButton'))"/><label for="priorityButton"><font size="1" face="verdana">Priority</font></label>
+								<input type="checkbox" id="startButton" checked="checked" onClick="onStartButtonClick(document.getElementById('startButton'))"/><label for="startButton"><font size="1" face="verdana">Start-date</font></label>
+								<input type="checkbox" id="finishButton" checked="checked" onClick="onFinishButtonClick(document.getElementById('finishButton'))"/><label for="finishButton"><font size="1" face="verdana">Finish-date</font></label>
+								<input type="checkbox" id="durationButton" checked="checked" onClick="onDurationButtonClick(document.getElementById('durationButton'))"/><label for="durationButton"><font size="1" face="verdana">Duration</font></label>
+								<input type="checkbox" id="completeButton" checked="checked" onClick="onCompleteButtonClick(document.getElementById('completeButton'))"/><label for="completeButton"><font size="1" face="verdana">Completeness</font></label>
+							</td>
+						</tr>
+					</table>
+					</center>
+				</div>
+			</div>
+			<div id="center-container">
+				<div id="infovis"></div>   
+			</div>
+			<div id="right-container">
+				<div id="inner-details"></div>
+			</div>
+			<div id="log"></div>
+		</div>
+	</body>
+</html>

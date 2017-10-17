@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="PM-Mapper:jar">
+    <output-path>$PROJECT_DIR$/build</output-path>
+    <root id="archive" name="PM-Mapper.jar">
+      <element id="module-output" name="PM-Mapper" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-cli-1.2-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-lang3-3.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/mpxj-4.4.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/commons-cli-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/lib/poi-3.7-20101029.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

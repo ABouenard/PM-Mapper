@@ -48,131 +48,6 @@ public class Htmlizer
 				jsFile.createNewFile();
 				BufferedWriter jsWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(jsFile), "UTF8"));
 				jsWriter.write(
-						"var labelType, useGradients, nativeTextSupport, animate;\n" +
-						"var colorCold = [0, 0, 200], colorWarm = [0, 200, 0];\n" +
-						"var priorityAttribute = true, startAttribute = true, finishAttribute = true, durationAttribute = true, completeAttribute = true;\n" +
-						"var treemap;\n\n"
-				);
-				jsWriter.write(
-						"(function()\n" +
-						"{\n" +
-						"\tvar ua = navigator.userAgent,\n" +
-						"\t\tiStuff = ua.match(/iPhone/i) || ua.match(/iPad/i),\n" +
-						"\t\ttypeOfCanvas = typeof HTMLCanvasElement,\n" +
-						"\t\tnativeCanvasSupport = (typeOfCanvas == 'object' || typeOfCanvas == 'function'),\n" + 
-						"\t\ttextSupport = nativeCanvasSupport && (typeof document.createElement('canvas').getContext('2d').fillText == 'function');\n" +
-						"\tlabelType = (!nativeCanvasSupport || (textSupport && !iStuff))? 'Native' : 'HTML';\n" + 
-						"\tnativeTextSupport = labelType == 'Native';\n" +
-						"\tuseGradients = nativeCanvasSupport;\n" +
-						"\tanimate = !(iStuff || !nativeCanvasSupport);\n" +
-						"})();\n\n"
-				);
-				jsWriter.write(
-						"function RgbToHsl(r, g, b)\n" +
-						"{\n" +
-						"\tr /= 255, g /= 255, b /= 255;\n" +
-						"\tvar max = Math.max(r, g, b), min = Math.min(r, g, b);\n" +
-						"\tvar h, s, l = (max + min) / 2;\n" +
-						"\tif(max == min)\n" +
-						"\t{\n" +
-						"\t\th = s = 0;\n" +
-						"\t}\n" +
-						"\telse\n" +
-						"\t{\n" +
-						"\t\tvar d = max - min;\n" +
-						"\t\ts = l > 0.5 ? d / (2 - max - min) : d / (max + min);\n" +
-						"\t\tswitch(max)\n" +
-						"\t\t{\n" +
-						"\t\t\tcase r: h = (g - b) / d + (g < b ? 6 : 0); break;\n" +
-						"\t\t\tcase g: h = (b - r) / d + 2; break;\n" +
-						"\t\t\tcase b: h = (r - g) / d + 4; break;\n" +
-						"\t\t}\n" +
-						"\t\th /= 6;\n" +
-						"\t}\n" +
-						"\treturn [h, s, l];\n" +
-						"}\n\n"
-				);
-				jsWriter.write(
-						"function HslToRgb(h, s, l)\n" +
-						"{\n" +
-						"\tvar r, g, b;\n" +
-						"\tif(s == 0)\n" +
-						"\t{\n" +
-						"\t\tr = g = b = l;\n" +
-						"\t}\n" +
-						"\telse\n" +
-						"\t{\n" +
-						"\t\tfunction Hue2Rgb(p, q, t)\n" +
-						"\t\t{\n" +
-						"\t\t\tif(t < 0) t += 1;\n" +
-						"\t\t\tif(t > 1) t -= 1;\n" +
-						"\t\t\tif(t < 1/6) return p + (q - p) * 6 * t;\n" +
-						"\t\t\tif(t < 1/2) return q;\n" +
-						"\t\t\tif(t < 2/3) return p + (q - p) * (2/3 - t) * 6;\n" +
-						"\t\t\treturn p;\n" +
-						"\t\t}\n" +
-						"\t\tvar q = l < 0.5 ? l * (1 + s) : l + s - l * s;\n" +
-						"\t\tvar p = 2 * l - q;\n" +
-						"\t\tr = Hue2Rgb(p, q, h + 1/3);\n" +
-						"\t\tg = Hue2Rgb(p, q, h);\n" +
-						"\t\tb = Hue2Rgb(p, q, h - 1/3);\n" +
-						"\t}\n" +
-						"\treturn [r*255, g*255, b*255];\n" +
-						"}\n\n"
-				);
-				jsWriter.write(
-						"function ColorBlendArray(color1, color2, ratio)\n" + 
-						"{\n" + 
-						"\tif((ratio < 0.0) || (ratio > 1.0))\n" + 
-						"\t{\n" + 
-						"\t\tratio = 0.5;\n" + 
-						"\t}\n" + 
-						"\tvar hsl1 = RgbToHsl(color1[0], color1[1], color1[2]);\n" + 
-						"\tvar hsl2 = RgbToHsl(color2[0], color2[1], color2[2]);\n" + 
-						"\tvar h = (1.0-ratio)*hsl1[0] + ratio*hsl2[0];\n" + 
-						"\tvar s = (1.0-ratio)*hsl1[1] + ratio*hsl2[1];\n" + 
-						"\tvar l = (1.0-ratio)*hsl1[2] + ratio*hsl2[2];\n" + 
-						"\tvar result = HslToRgb(h, s, l);\n" + 
-						"\treturn result;\n" + 
-						"};\n\n"
-				);	
-				jsWriter.write(
-						"function ColorBlend(color1, color2, ratio)\n" + 
-						"{\n" + 
-						"\tif((ratio < 0.0) || (ratio > 1.0))\n" + 
-						"\t{\n" + 
-						"\t\tratio = 0.5;\n" + 
-						"\t}\n" + 
-						"\tvar hsl1 = RgbToHsl(color1[0], color1[1], color1[2]);\n" + 
-						"\tvar hsl2 = RgbToHsl(color2[0], color2[1], color2[2]);\n" + 
-						"\tvar h = (1.0-ratio)*hsl1[0] + ratio*hsl2[0];\n" + 
-						"\tvar s = (1.0-ratio)*hsl1[1] + ratio*hsl2[1];\n" + 
-						"\tvar l = (1.0-ratio)*hsl1[2] + ratio*hsl2[2];\n" + 
-						"\tvar result = HslToRgb(h, s, l);\n" + 
-						"\treturn 'rgba(' + Math.round(result[0]) + ', ' + Math.round(result[1]) + ', ' + Math.round(result[2]) + ', 0)';\n" + 
-						"};\n\n"
-				);	
-				jsWriter.write(
-						"function ColorToHex(color)\n" +
-						"{\n" +
-						"\tvar m = /rgba?\\(\\s*(\\d+)\\s*,\\s*(\\d+)\\s*,\\s*(\\d+)/.exec(color);\n" +
-						"\treturn m ? (1 << 24 | m[1] << 16 | m[2] << 8 | m[3]).toString(16).substr(1) : color;\n" +
-						"};\n\n"
-				);	
-				jsWriter.write(
-						"var Log =\n" +
-						"{\n" +
-						"\telem: false,\n" +
-						"\twrite: function(text)\n" +
-						"\t{\n" +
-						"\t\tif(!this.elem)\n" +
-						"\t\t\tthis.elem = document.getElementById('log');\n" +
-						"\t\tthis.elem.innerHTML = text;\n" +
-						"\t\tthis.elem.style.left = (500 - this.elem.offsetWidth / 2) + 'px';\n" +
-						"\t}\n" +
-						"};\n\n"
-				);
-				jsWriter.write(
 						"function init()\n" +
 						"{\n" +
 						"\tvar json =\n" +
@@ -300,18 +175,19 @@ public class Htmlizer
 								"\t<head>\n" + 
 								"\t\t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\" />\n" +
 								"\t\t<title>Project Management Mapper</title>\n\n" +
-								"\t\t<!-- CSS Files -->\n" +
+								"\t\t<!-- CSS -->\n" +
 								"\t\t<link type=\"text/css\" href=\"" + m_cssDirectory + "base.css\" rel=\"stylesheet\" />\n" +
 								"\t\t<link type=\"text/css\" href=\"" + m_cssDirectory + "Treemap.css\" rel=\"stylesheet\" />\n\n" +
-								"\t\t<!--[if IE]><script language=\"javascript\" type=\"text/javascript\" src=\"" + m_jsDirectory + "jit-2.0.1/Extras/excanvas.js\"></script><![endif]-->\n\n" +
-								"\t\t<!-- JIT Library File -->\n" +
-								"\t\t<script language=\"javascript\" type=\"text/javascript\" src=\"" + m_jsDirectory + "jit-2.0.1/jit.js\"></script>\n\n" +
-								"\t\t<!-- Data File -->\n" +
-								"\t\t<script language=\"javascript\" type=\"text/javascript\" src=\"" + "./" + m_outFile + ".js" + "\"></script>\n\n" +						
-								"\t\t<!-- Colors -->\n" +
+								"\t\t<!-- JQuery -->\n" +
 								"\t\t<link type=\"text/css\" href=\"" + m_cssDirectory + "jquery-ui-1.8.18/ui-lightness/jquery-ui-1.8.18.custom.css\" rel=\"stylesheet\"/>\n" +
 								"\t\t<script type=\"text/javascript\" src=\"" + m_jsDirectory + "jquery-1.7.1.min.js\"></script>\n" +
-								"\t\t<script type=\"text/javascript\" src=\"" + m_jsDirectory + "jquery-ui-1.8.18/jquery-ui-1.8.18.custom.min.js\"></script>\n" +
+								"\t\t<script type=\"text/javascript\" src=\"" + m_jsDirectory + "jquery-ui-1.8.18/jquery-ui-1.8.18.custom.min.js\"></script>\n\n" +
+								"\t\t<!-- JIT -->\n" +
+								"\t\t<script language=\"javascript\" type=\"text/javascript\" src=\"" + m_jsDirectory + "jit-2.0.1/jit.js\"></script>\n\n" +
+								"\t\t<!-- Utils -->\n" +
+								"\t\t<script language=\"javascript\" type=\"text/javascript\" src=\"" + m_jsDirectory + "utils.js\"></script>\n\n" +
+								"\t\t<!-- Data -->\n" +
+								"\t\t<script language=\"javascript\" type=\"text/javascript\" src=\"" + "./" + m_outFile + ".js" + "\"></script>\n\n" +						
 								"\t\t<script>\n" +
 								"\t\t\t$(function()\n" +
 								"\t\t\t\t{\n" +
